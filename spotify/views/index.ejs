@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Playlist</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>My Music Playlist</h1>
+    </header>
+    
+    <!-- Button to Add New Song -->
+    <a href="/add" class="add-song-button">Add New Song</a>
+
+    <div class="song-container">
+        <% spot.forEach(song => { %>
+        <div class="song-card">
+            <div class="song-image">
+                <a href="/song/<%= song.id %>">
+                    <img src="<%= song.image %>" alt="<%= song.title %>">
+                </a>
+            </div>
+            <div class="song-info">
+                <h2><a href="/song/<%= song.id %>"><%= song.title %></a></h2>
+                <p>by <%= song.artist %></p>
+                <audio controls>
+                    <source src="<%= song.file_path %>" type="audio/mpeg">
+                    Your browser does not support the audio tag.
+                </audio>
+            </div>
+            <div class="song-options">
+                <!-- Form to Add Song to Queue -->
+                <form action="/add-song" method="POST">
+                    <input type="hidden" name="id" value="<%= song.id %>">
+                    <input type="hidden" name="title" value="<%= song.title %>">
+                    <input type="hidden" name="artist" value="<%= song.artist %>">
+                    <input type="hidden" name="file_path" value="<%= song.file_path %>">
+                    <input type="hidden" name="image" value="<%= song.image %>">
+                    <input type="hidden" name="lyrics" value="<%= song.lyrics %>">
+                    <button type="submit" class="queue-btn">Add to Queue</button>
+                </form>
+
+                <!-- Edit and Delete Buttons -->
+                <form action="/edit/<%= song.id %>" method="GET">
+                    <button type="submit" class="edit-btn">Edit</button>
+                </form>
+                <form action="/delete/<%= song.id %>" method="POST">
+                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this song?')">Delete</button>
+                </form>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <!-- Link to View the Song Queue -->
+    <div class="container">
+        <h1>My Queue</h1>
+        <a href="/queue" class="btn">View Song Queue</a>
+    </div>
+
+    <script>
+        // Modal logic if you need to open modals for song details
+        function openSongModal(title, artist, lyrics, filePath, image) {
+            document.getElementById('modal-song-title').innerText = title;
+            document.getElementById('modal-song-artist').innerText = 'by ' + artist;
+            document.getElementById('modal-song-lyrics').innerText = lyrics;
+            document.getElementById('modal-song-source').src = filePath;
+            document.getElementById('modal-song-audio').load();
+            document.getElementById('song-modal').style.display = 'block';
+        }
+
+        function closeSongModal() {
+            document.getElementById('song-modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('song-modal');
+            if (event.target == modal) {
+                closeSongModal();
+            }
+        };
+    </script>
+</body>
+</html>

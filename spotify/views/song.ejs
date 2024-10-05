@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= song.title %> by <%= song.artist %></title>
+    <link rel="stylesheet" href="/public/styles.css"> <!-- Your stylesheet -->
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            background-color: #121212; /* Spotify dark background */
+            color: #e0e0e0; /* Softer text color */
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full height of the viewport */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container for song details */
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px;
+            background-color: #181818; /* Dark container background */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+            text-align: center;
+        }
+
+        /* Title Styling */
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #1DB954; /* Spotify green */
+        }
+
+        /* Album Image */
+        img {
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            max-width: 80%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Image shadow */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        /* Audio Player */
+        audio {
+            display: block;
+            margin: 30px auto;
+            width: 100%;
+            background: #333; /* Darker background for audio player */
+            border-radius: 5px;
+            outline: none;
+        }
+
+        /* Lyrics Styling */
+        .lyrics {
+            background: #282828; /* Darker background for lyrics */
+            padding: 20px;
+            border-left: 6px solid #1DB954; /* Spotify green border */
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            transition: background-color 0.3s;
+        }
+
+        .lyrics:hover {
+            background-color: #333; /* Darker on hover */
+        }
+
+        /* Back to Playlist Link */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin: 30px 0;
+            color: #1DB954; /* Spotify green */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #17a84a; /* Lighter green on hover */
+            text-decoration: underline;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            .lyrics {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><%= song.title %> by <%= song.artist %></h1>
+        <img src="<%= song.image %>" alt="<%= song.title %>">
+        <audio controls src="<%= song.file_path %>" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="lyrics">
+            <p><strong>Lyrics:</strong></p>
+            <p><%= song.lyrics %></p>
+        </div>
+        <a class="back-link" href="/">Back to Playlist</a>
+    </div>
+</body>
+</html>
